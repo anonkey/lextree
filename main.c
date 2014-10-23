@@ -6,7 +6,7 @@
 /*   By: tseguier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/07/06 13:54:33 by tseguier          #+#    #+#             */
-/*   Updated: 2014/10/23 04:11:24 by garm             ###   ########.fr       */
+/*   Updated: 2014/10/23 04:19:30 by garm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int			ft_lextree_insert(t_lextree *tree, void *content, char *key)
 		}
 		else
 		{
-			ft_memdel((void **)&((*tree)->content));
+			// TODO: ??? ft_memdel((void **)&((*tree)->content));
 			(*tree)->content = content;
 		}
 	}
