@@ -6,7 +6,7 @@
 /*   By: tseguier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/07/06 13:54:33 by tseguier          #+#    #+#             */
-/*   Updated: 2014/10/22 22:09:50 by garm             ###   ########.fr       */
+/*   Updated: 2014/10/23 04:11:24 by garm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			ft_lextree_insert(t_lextree *tree, void *content, char *key)
 				return (-3);
 			if (ft_addson(&(new->sonlist), *tree, (*tree)->key[i]))
 				return (-4);
-			if (!(tmp = ft_strdup(key + i + 1)))
+			if (!(tmp = ft_strdup((*tree)->key + i + 1)))
 				return (-5);
 			ft_strdel(&((*tree)->key));
 			(*tree)->key = tmp;
@@ -117,7 +117,7 @@ int			ft_lextree_insert(t_lextree *tree, void *content, char *key)
 	{
 		if (!(*tree)->key[i])
 		{
-			if (!(son = ft_getson((*tree)->sonlist, key[i])))
+			if (!(son = ft_getson((*tree)->sonlist, key[i])) || !*son)
 			{
 				if (!(new = ft_lextreenew(content, key + i + 1)))
 					return (-3);
