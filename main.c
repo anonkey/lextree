@@ -6,7 +6,7 @@
 /*   By: tseguier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/07/06 13:54:33 by tseguier          #+#    #+#             */
-/*   Updated: 2014/10/23 04:19:30 by garm             ###   ########.fr       */
+/*   Updated: 2014/10/24 18:57:36 by tseguier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,9 @@ int			ft_lextree_put(t_lextree tree, char *buff, int len, int (*put)(void *))
 //	if (tree->content)
 //	{
 		ft_putstr(buff);
-		ft_putstr(" : ");
+		ft_putstr("=\'");
 		(*put)(tree->content);
-		ft_putendl("");
+		ft_putendl("\'");
 //	}
 	if ((iter = tree->sonlist) && iter->node)
 	{
@@ -181,6 +181,30 @@ int			ft_lextree_put(t_lextree tree, char *buff, int len, int (*put)(void *))
 	return (0);
 }
 
+void		*ft_lextree_get(t_lextree tree, char *key)
+{
+	t_lextree	*son_p;
+	int			i;
+
+	i = 0;
+	while (tree->key[i] && tree->key[i] == key[i])
+		++i;
+	if (!key[i])
+	{
+		if (tree->key[i])
+			return (NULL);
+		return (tree->content);
+	}
+	if (!tree->key[i])
+	{
+		if (!(son_p = ft_getson(tree->sonlist, key[i])))
+			return (NULL);
+		return (ft_lextree_get(*son_p, key + i + 1));
+	}
+	else
+		return (NULL);
+}
+
 int		putv(void *v)
 {
 	ft_putstr((char *)v);
@@ -190,20 +214,28 @@ int		putv(void *v)
 int		main(int argc, char **argv)
 {
 	char	buff[256] = {'\0'};
-	int		i;
+	char	**tab;
+	char	*line;
 	t_lextree tree = ft_lextreenew(argv[1], argv[2]);
 
-	ft_putendl("Lextree");
-	ft_putendl("tree:");
-	ft_lextree_put(tree, buff, 0, putv);
-	i = 3;
-	while (i + 1 < argc)
+	//ft_putendl("Lextree");
+	//ft_putendl("tree:");
+	//ft_lextree_put(tree, buff, 0, putv);
+	if (argc < 3)
+		return (-1);
+	while (0 < get_next_line(0, &line))
 	{
-		ft_lextree_insert(&tree, argv[i], argv[i + 1]);
-		ft_putendl("tree:");
-		ft_lextree_put(tree, buff, 0, putv);
-		i += 2;
+		ft_bzero(buff, 256);
+		tab = ft_strsplit(line, '=');
+		ft_putstr("value : ");ft_putstr(tab[0]); ft_putstr("| key : ");ft_putendl(tab[1]);
+		ft_lextree_insert(&tree, tab[0], tab[1]);
+		free(line);
+		ft_strtabdel(&tab);
+	//	ft_putendl("tree:");
+	//	ft_lextree_put(tree, buff, 0, putv);
 	}
+	ft_lextree_put(tree, buff, 0, putv);
+	ft_lextree_get(tree, "12");
 	ft_lextreedel(&tree);
 	return (0);
 }

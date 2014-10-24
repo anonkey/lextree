@@ -6,7 +6,7 @@
 #    By: tseguier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/10/19 20:08:00 by tseguier          #+#    #+#              #
-#    Updated: 2014/10/19 20:08:07 by tseguier         ###   ########.fr        #
+#    Updated: 2014/10/24 18:22:56 by tseguier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ endif
 ifeq ($(DEBUG), 1)
 	CFLAGS = -Wall -Wextra -Werror -ggdb3
 else
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -Werror -ggdb3
 endif
 NAME = lextree
 INCDIR = ./libft/headers
